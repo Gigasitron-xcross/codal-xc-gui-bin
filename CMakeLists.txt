@@ -1,4 +1,4 @@
-project(codal-xc-gui)
+project(codal-xc-gui-bin)
 
 include("${CODAL_UTILS_LOCATION}")
 
@@ -14,37 +14,40 @@ if(NOT EXISTS "${XC_GUI_ARCHIVE}")
     )
 endif()
 
+#
+# The target name must match the CODAL library/repository name:
+#
+#     codal-xc-gui-bin
+#
+# PXT/CODAL will link this target into MICROBIT.
+#
 add_library(
-    xc_gui_prebuilt
+    xc-gui-prebuilt
     STATIC
     IMPORTED
     GLOBAL
 )
 
 set_target_properties(
-    xc_gui_prebuilt
+    xc-gui-prebuilt
     PROPERTIES
-    IMPORTED_LOCATION "${XC_GUI_ARCHIVE}"
+        IMPORTED_LOCATION
+            "${XC_GUI_ARCHIVE}"
 )
 
 add_library(
-    codal-xc-gui
+    codal-xc-gui-bin
     INTERFACE
 )
 
 target_include_directories(
-    codal-xc-gui
+    codal-xc-gui-bin
     INTERFACE
-    "${CMAKE_CURRENT_SOURCE_DIR}/inc"
+        "${CMAKE_CURRENT_SOURCE_DIR}/inc"
 )
 
 target_link_libraries(
-    codal-xc-gui
+    codal-xc-gui-bin
     INTERFACE
-    xc_gui_prebuilt
-)
-
-# Make headers visible to xcgui.cpp and LCD_ST7789_Port.cpp.
-include_directories(
-    "${CMAKE_CURRENT_SOURCE_DIR}/inc"
+        xc-gui-prebuilt
 )
