@@ -1,6 +1,6 @@
-project(codal-xc-gui-bin)
+cmake_minimum_required(VERSION 3.5)
 
-include("${CODAL_UTILS_LOCATION}")
+project(codal_xc_gui_bin C CXX)
 
 set(
     XC_GUI_ARCHIVE
@@ -14,40 +14,28 @@ if(NOT EXISTS "${XC_GUI_ARCHIVE}")
     )
 endif()
 
+message(
+    STATUS
+    "Using XC_GUI archive: ${XC_GUI_ARCHIVE}"
+)
+
 #
-# The target name must match the CODAL library/repository name:
-#
-#     codal-xc-gui-bin
-#
-# PXT/CODAL will link this target into MICROBIT.
+# The target name must exactly match the CODAL library name
+# generated from the GitHub repository name.
 #
 add_library(
-    xc-gui-prebuilt
+    codal-xc-gui-bin
     STATIC
     IMPORTED
     GLOBAL
 )
 
 set_target_properties(
-    xc-gui-prebuilt
+    codal-xc-gui-bin
     PROPERTIES
         IMPORTED_LOCATION
             "${XC_GUI_ARCHIVE}"
-)
 
-add_library(
-    codal-xc-gui-bin
-    INTERFACE
-)
-
-target_include_directories(
-    codal-xc-gui-bin
-    INTERFACE
-        "${CMAKE_CURRENT_SOURCE_DIR}/inc"
-)
-
-target_link_libraries(
-    codal-xc-gui-bin
-    INTERFACE
-        xc-gui-prebuilt
+        INTERFACE_INCLUDE_DIRECTORIES
+            "${CMAKE_CURRENT_SOURCE_DIR}/inc"
 )
