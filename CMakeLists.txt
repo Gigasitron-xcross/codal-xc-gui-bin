@@ -1,6 +1,10 @@
-cmake_minimum_required(VERSION 3.5)
+include("${CODAL_UTILS_LOCATION}")
 
-project(codal_xc_gui_bin C CXX)
+RECURSIVE_FIND_DIR(
+    INCLUDE_DIRS
+    "${CMAKE_CURRENT_SOURCE_DIR}/inc"
+    "*.h"
+)
 
 set(
     XC_GUI_ARCHIVE
@@ -16,26 +20,23 @@ endif()
 
 message(
     STATUS
-    "Using XC_GUI archive: ${XC_GUI_ARCHIVE}"
+    "XC_GUI archive: ${XC_GUI_ARCHIVE}"
 )
 
-#
-# The target name must exactly match the CODAL library name
-# generated from the GitHub repository name.
-#
 add_library(
     codal-xc-gui-bin
     STATIC
-    IMPORTED
-    GLOBAL
+    "${CMAKE_CURRENT_SOURCE_DIR}/source/xc_gui_bin_anchor.cpp"
 )
 
-set_target_properties(
+target_include_directories(
     codal-xc-gui-bin
-    PROPERTIES
-        IMPORTED_LOCATION
-            "${XC_GUI_ARCHIVE}"
+    PUBLIC
+        ${INCLUDE_DIRS}
+)
 
-        INTERFACE_INCLUDE_DIRECTORIES
-            "${CMAKE_CURRENT_SOURCE_DIR}/inc"
+target_link_libraries(
+    codal-xc-gui-bin
+    PUBLIC
+        "${XC_GUI_ARCHIVE}"
 )
