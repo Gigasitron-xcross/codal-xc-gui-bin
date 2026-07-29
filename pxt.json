@@ -18,5 +18,7 @@
 
     "disablesVariants": [
         "mbdal"
-    ]
+    ],
+
+     "public": true
 }
