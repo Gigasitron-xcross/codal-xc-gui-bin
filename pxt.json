@@ -1,0 +1,22 @@
+{
+    "name": "xc-gui-bin",
+    "version": "0.0.4",
+    "description": "XC_GUI for micro:bit V2",
+    "license": "All rights reserved",
+
+    "dependencies": {
+        "core": "*"
+    },
+
+    "files": [
+        "source/xc_gui_bin_anchor.cpp"
+    ],
+
+    "supportedTargets": [
+        "microbit"
+    ],
+
+    "disablesVariants": [
+        "mbdal"
+    ]
+}
